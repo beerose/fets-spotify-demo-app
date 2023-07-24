@@ -13,7 +13,7 @@ specifiers:
   eslint: ^8.44.0
   eslint-plugin-react-hooks: ^4.6.0
   eslint-plugin-react-refresh: ^0.4.1
-  fets: ^0.4.1
+  fets: ^0.4.7
   postcss: ^8.4.25
   prettier: ^3.0.0
   react: ^18.2.0
@@ -28,7 +28,7 @@ dependencies:
   '@headlessui/react': 1.7.15_biqbaboplfbrettd7655fr4n2y
   '@types/node': 20.4.1
   dotenv: 16.3.1
-  fets: 0.4.1
+  fets: 0.4.7
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-query: 3.39.3_biqbaboplfbrettd7655fr4n2y
@@ -1634,8 +1634,8 @@ packages:
       reusify: 1.0.4
     dev: true
 
-  /fets/0.4.1:
-    resolution: {integrity: sha512-wjh2y4kVM4eyQqXlqZKAxoCIf0yzJrNd9j0SGPtqSLokiPQRyOHWD1kEws+9JJKpHDevkE24CkGzuSlFFq+hPw==}
+  /fets/0.4.7:
+    resolution: {integrity: sha512-K0VI2nEIIJgIr4i6+2rWC5lN7/FzRuTh0ED9Gzuf1I213erFrqmYOgTeiy0NbzTqX5n5yXf49ViC+w21zRp3pQ==}
     engines: {node: '>=16.0.0'}
     dependencies:
       '@ardatan/fast-json-stringify': 0.0.6_ijbmq3so47z3eca6ib3rxu7aka
