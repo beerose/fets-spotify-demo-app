@@ -2,7 +2,6 @@ lockfileVersion: 5.4
 
 specifiers:
   '@headlessui/react': ^1.7.15
-  '@types/dotenv': ^8.2.0
   '@types/node': ^20.4.1
   '@types/react': ^18.2.14
   '@types/react-dom': ^18.2.6
@@ -14,7 +13,7 @@ specifiers:
   eslint: ^8.44.0
   eslint-plugin-react-hooks: ^4.6.0
   eslint-plugin-react-refresh: ^0.4.1
-  fets: ^0.3.1
+  fets: ^0.4.1
   postcss: ^8.4.25
   prettier: ^3.0.0
   react: ^18.2.0
@@ -27,10 +26,9 @@ specifiers:
 
 dependencies:
   '@headlessui/react': 1.7.15_biqbaboplfbrettd7655fr4n2y
-  '@types/dotenv': 8.2.0
   '@types/node': 20.4.1
   dotenv: 16.3.1
-  fets: 0.3.1
+  fets: 0.4.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-query: 3.39.3_biqbaboplfbrettd7655fr4n2y
@@ -862,13 +860,6 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@types/dotenv/8.2.0:
-    resolution: {integrity: sha512-ylSC9GhfRH7m1EUXBXofhgx4lUWmFeQDINW5oLuS+gxWdfUeW4zJdeVTYVkexEW+e2VUvlZR2kGnGGipAWR7kw==}
-    deprecated: This is a stub types definition. dotenv provides its own type definitions, so you do not need this installed.
-    dependencies:
-      dotenv: 16.3.1
-    dev: false
-
   /@types/json-schema/7.0.12:
     resolution: {integrity: sha512-Hr5Jfhc9eYOQNPYO5WLDq/n4jqijdHNlDXjuAQkkt+mWdQR+XJToOHrsD4cPaMXpn6KO7y2+wM8AZEs8VpBLVA==}
 
@@ -1643,8 +1634,8 @@ packages:
       reusify: 1.0.4
     dev: true
 
-  /fets/0.3.1:
-    resolution: {integrity: sha512-z8SYGRtMEHNGoXXCZTcQzl7hVl63FkySFVu42Ntfghv0yQ5+H5nD3js337pCLhSywLOE9lB2zgqGgoc+YtkE5A==}
+  /fets/0.4.1:
+    resolution: {integrity: sha512-wjh2y4kVM4eyQqXlqZKAxoCIf0yzJrNd9j0SGPtqSLokiPQRyOHWD1kEws+9JJKpHDevkE24CkGzuSlFFq+hPw==}
     engines: {node: '>=16.0.0'}
     dependencies:
       '@ardatan/fast-json-stringify': 0.0.6_ijbmq3so47z3eca6ib3rxu7aka
@@ -1655,6 +1646,7 @@ packages:
       ajv-formats: 2.1.1
       hotscript: 1.0.13
       json-schema-to-ts: 2.9.1
+      ts-toolbelt: 9.6.0
       tslib: 2.6.0
       zod: 3.21.4
       zod-to-json-schema: 3.21.3_zod@3.21.4
@@ -2515,6 +2507,10 @@ packages:
   /ts-interface-checker/0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
     dev: true
+
+  /ts-toolbelt/9.6.0:
+    resolution: {integrity: sha512-nsZd8ZeNUzukXPlJmTBwUAuABDe/9qtVDelJeT/qW0ow3ZS3BsQJtNkan1802aM9Uf68/Y8ljw86Hu0h5IUW3w==}
+    dev: false
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}

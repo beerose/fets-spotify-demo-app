@@ -1,12 +1,8 @@
 import fs from "fs";
 import { config } from "dotenv";
+import { client } from '../fets/client'
 
 config();
-
-interface SpotifyResponse {
-  access_token: string;
-  [key: string]: unknown;
-}
 
 const fetchSpotifyToken = async (): Promise<void> => {
   const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } = process.env;
@@ -17,16 +13,16 @@ const fetchSpotifyToken = async (): Promise<void> => {
   }
 
   try {
-    const response = await fetch("https://accounts.spotify.com/api/token", {
-      method: "POST",
-      body: "grant_type=client_credentials",
+    const response = await client['https://accounts.spotify.com/api/token'].post({
+      formUrlEncoded: {
+        grant_type: 'client_credentials'
+      },
       headers: {
         Authorization: `Basic ${Buffer.from(
           `${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`,
         ).toString("base64")}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    });
+      }
+    })
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -36,17 +32,8 @@ const fetchSpotifyToken = async (): Promise<void> => {
       console.error("No data was returned from the Spotify API.");
       return;
     }
-    const reader = response.body.getReader();
 
-    const { done, value } = await reader.read();
-
-    if (done) {
-      console.error("No data was returned from the Spotify API.");
-      return;
-    }
-
-    const data = new TextDecoder("utf-8").decode(value);
-    const spotifyResponse = JSON.parse(data) as SpotifyResponse;
+    const spotifyResponse = await response.json();
 
     // replace the token in .env
     const envFile = fs.readFileSync(".env", "utf-8").split("\n");
@@ -77,7 +64,8 @@ fetchSpotifyToken()
   .catch((error) => {
     if (error instanceof Error) {
       console.error("An error occurred: ", error.message);
-      return;
+    } else {
+      console.error(error);
     }
-    console.error(error);
+    process.exit(1);
   });
