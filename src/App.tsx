@@ -4,12 +4,16 @@ import { useQuery } from 'react-query'
 import { client } from './fets/client'
 import './index.css'
 
-async function fetchRecommendations(mood?: string) {
+async function fetchRecommendations(
+  mood?: string,
+  token?: string,
+  retries = 0
+) {
   if (!mood) return
+  if (retries > 2) return
 
-  let token = import.meta.env.VITE_APP_SPOTIFY_TOKEN
   if (!token) {
-    token = await getToken()
+    token = import.meta.env.VITE_APP_SPOTIFY_TOKEN
   }
 
   const response = await client['/recommendations'].get({
@@ -25,6 +29,10 @@ async function fetchRecommendations(mood?: string) {
   })
 
   if (!response.ok) {
+    if (response.status === 401) {
+      const token = await getToken()
+      return fetchRecommendations(mood, token, retries + 1)
+    }
     const errorResponse = await response.text()
     throw new Error(errorResponse)
   }
