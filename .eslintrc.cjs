@@ -1,6 +1,12 @@
 /* eslint-env node */
 
 module.exports = {
+  include: [
+    'src/**/*.{js,jsx,ts,tsx}',
+    '.eslintrc.cjs',
+    'scripts/**/*.{js,ts}',
+    './vite.config.ts',
+  ],
   root: true,
   env: { browser: true, es2020: true },
   extends: [
