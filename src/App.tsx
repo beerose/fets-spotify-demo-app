@@ -4,9 +4,10 @@ import { useQuery } from 'react-query'
 import { client } from './fets/client'
 import './index.css'
 
-async function fetchRecommendations(mood?: string, token?: string) {
+async function fetchRecommendations(mood?: string) {
   if (!mood) return
 
+  let token = import.meta.env.VITE_APP_SPOTIFY_TOKEN
   if (!token) {
     token = await getToken()
   }
@@ -19,15 +20,11 @@ async function fetchRecommendations(mood?: string, token?: string) {
       seed_tracks: '0c6xIDDpzE81m2q797ordA',
     },
     headers: {
-      Authorization: `Bearer ${import.meta.env.VITE_APP_SPOTIFY_TOKEN}`,
+      Authorization: `Bearer ${token}`,
     },
   })
 
   if (!response.ok) {
-    if (response.status === 401) {
-      return fetchRecommendations(mood)
-    }
-
     const errorResponse = await response.text()
     throw new Error(errorResponse)
   }
@@ -85,13 +82,11 @@ function App() {
             <RadioGroup.Option
               key={mood.name}
               value={mood}
-              className={() =>
-                `${
-                  mood.color === currentMood?.color
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-white text-gray-500 border-gray-300'
-                } relative flex cursor-pointer items-center justify-center rounded-full px-2 py-1 border focus:outline-none`
-              }
+              className={`${
+                mood.name === currentMood?.name
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-white text-gray-500 border-gray-300'
+              } relative flex cursor-pointer items-center justify-center rounded-full px-2 py-1 border focus:outline-none`}
             >
               <RadioGroup.Label as="p">{mood.name}</RadioGroup.Label>
             </RadioGroup.Option>
