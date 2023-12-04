@@ -1,71 +1,82 @@
-import { useState } from "react";
-import { RadioGroup } from "@headlessui/react";
-import { useQuery } from "react-query";
-import { client } from "./fets/client";
-import "./index.css";
+import { useState } from 'react'
+import { RadioGroup } from '@headlessui/react'
+import { useQuery } from 'react-query'
+import { client } from './fets/client'
+import './index.css'
 
-async function fetchRecommendations(mood?: string) {
-  if (!mood) return;
+async function fetchRecommendations(mood?: string, token?: string) {
+  if (!mood) return
 
-  const response = await client["/recommendations"].get({
+  if (!token) {
+    token = await getToken()
+  }
+
+  const response = await client['/recommendations'].get({
     query: {
       seed_genres: mood,
       limit: 3,
-      seed_artists: "4NHQUGzhtTLFvgF5SZesLK",
-      seed_tracks: "0c6xIDDpzE81m2q797ordA",
+      seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
+      seed_tracks: '0c6xIDDpzE81m2q797ordA',
     },
     headers: {
       Authorization: `Bearer ${import.meta.env.VITE_APP_SPOTIFY_TOKEN}`,
     },
-  });
+  })
 
   if (!response.ok) {
-    const errorResponse = await response.text();
-    throw new Error(errorResponse);
+    if (response.status === 401) {
+      return fetchRecommendations(mood)
+    }
+
+    const errorResponse = await response.text()
+    throw new Error(errorResponse)
   }
 
-  const recommendations = await response.json();
-  return recommendations;
+  const recommendations = await response.json()
+  return recommendations
 }
 
 type Mood = {
-  name: string;
-  color: string;
-};
+  name: string
+  color: string
+}
 const moods: Array<Mood> = [
   {
-    name: "happy",
-    color: "#C3EDC0",
+    name: 'happy',
+    color: '#C3EDC0',
   },
   {
-    name: "sad",
-    color: "#C4DFDF",
+    name: 'sad',
+    color: '#C4DFDF',
   },
   {
-    name: "angry",
-    color: "#FFB4B4",
+    name: 'angry',
+    color: '#FFB4B4',
   },
   {
-    name: "chill",
-    color: "#FDF7C3",
+    name: 'chill',
+    color: '#FDF7C3',
   },
   {
-    name: "party",
-    color: "#B2A4FF",
+    name: 'party',
+    color: '#B2A4FF',
   },
-];
+]
 
 function App() {
-  const [currentMood, setCurrentMood] = useState<Mood | undefined>(undefined);
+  const [currentMood, setCurrentMood] = useState<Mood | undefined>(undefined)
 
   const { isFetching, data } = useQuery(
-    ["recommendations", currentMood?.name],
-    ({ queryKey }) => fetchRecommendations(queryKey[1]),
-  );
+    ['recommendations', currentMood?.name],
+    ({ queryKey }) => fetchRecommendations(queryKey[1])
+  )
 
   return (
     <div className="space-y-4 w-[300px] h-[320px] text-xs flex flex-col items-center text-center">
-      <RadioGroup value={currentMood} onChange={setCurrentMood}>
+      <RadioGroup
+        value={currentMood}
+        onChange={setCurrentMood}
+      >
         <RadioGroup.Label className="font-semibold text-gray-800">
           Hey, what's your mood today?
         </RadioGroup.Label>
@@ -77,8 +88,8 @@ function App() {
               className={() =>
                 `${
                   mood.color === currentMood?.color
-                    ? "bg-blue-500 text-white"
-                    : "bg-white text-gray-500 border-gray-300"
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-white text-gray-500 border-gray-300'
                 } relative flex cursor-pointer items-center justify-center rounded-full px-2 py-1 border focus:outline-none`
               }
             >
@@ -111,15 +122,23 @@ function App() {
       <div className="space-y-2">
         {data?.tracks?.map((track) => (
           <iframe
-            src={`https://open.spotify.com/embed/track/${track.id || ""}`}
+            src={`https://open.spotify.com/embed/track/${track.id || ''}`}
             height="80"
             width="100%"
             allow="encrypted-media"
+            key={track.id}
           />
         ))}
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
+
+const getToken = async () => {
+  const response = await fetch('/token', {})
+
+  const data = await response.json()
+  return data.token
+}
