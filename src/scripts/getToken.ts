@@ -32,6 +32,8 @@ const saveToken = async (): Promise<void> => {
     newEnvVariables.push(`VITE_APP_SPOTIFY_TOKEN=${token}`)
 
     fs.writeFileSync('.env', newEnvVariables.join('\n'))
+
+    console.log(token)
   } catch (error) {
     console.error('An error occurred:', error)
   }
@@ -39,7 +41,7 @@ const saveToken = async (): Promise<void> => {
 
 saveToken()
   .then(() => {
-    console.log('Spotify token was saved successfully!')
+    console.log('\nSpotify token was saved successfully!')
   })
   .catch((error) => {
     if (error instanceof Error) {
